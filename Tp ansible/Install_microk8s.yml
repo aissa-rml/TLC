@@ -1,0 +1,74 @@
+---
+- name: Installer MicroK8s sur Ubuntu
+  hosts: all
+  become: yes
+  vars:
+    ansible_user: votre_nom_dutilisateur
+
+  tasks:
+    - name: Mise à jour de la liste des paquets
+      apt:
+        update_cache: yes
+
+    - name: Installation de Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Installation de MicroK8s
+      snap:
+        name: microk8s
+        classic: yes
+        channel: '1.25/stable'
+
+    - name: Ajout de l'utilisateur au groupe microk8s
+      user:
+        name: "{{ zprojet }}"
+        groups: microk8s
+        append: yes
+
+    - name: Assurer que le dossier .kube existe
+      file:
+        path: "/home/{{ zprojet }}/.kube"
+        state: directory
+        owner: "{{ zprojet }}"
+        mode: '0755'
+
+    - name: Modification des permissions du dossier .kube
+      file:
+        path: "/home/{{ zprojet }}/.kube"
+        state: directory
+        owner: "{{ zprojet }}"
+        recurse: yes
+
+    - name: Démarrage de MicroK8s
+      command: microk8s start
+      become_user: "{{ zprojet }}"
+      environment:
+        HOME: "/home/{{ zprojet }}"
+
+    - name: Attente que MicroK8s soit prêt
+      command: microk8s status --wait-ready
+
+    - name: Activation des services MicroK8s (dns, storage, dashboard, ingress, registry)
+      command: microk8s enable dns storage dashboard ingress registry
+      become_user: "{{ zprojet }}"
+      environment:
+        HOME: "/home/{{ zprojet }}"
+
+    - name: Configuration de Docker pour le registre non sécurisé
+      blockinfile:
+        path: /etc/docker/daemon.json
+        create: yes
+        block: |
+          {
+            "insecure-registries" : ["localhost:32000"]
+          }
+      notify:
+        - redémarrer docker
+
+  handlers:
+    - name: redémarrer docker
+      systemd:
+        name: docker
+        state: restarted

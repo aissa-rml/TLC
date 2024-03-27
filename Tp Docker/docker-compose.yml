@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  loadbalancer:
+    image: nginx
+    ports:
+      - "80:80"
+    networks:
+      - app_network
+
+  nginx1:
+    image: nginx
+    networks:
+      - app_network
+
+  nginx2:
+    image: nginx
+    networks:
+      - app_network
+
+  nginx3:
+    image: nginx
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
+
