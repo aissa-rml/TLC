@@ -1,12 +1,32 @@
-#Rendu Tp et Projet
+# Rendu TP et Projet
 
-Ce repository est le rendu de TP DOCKER,Tp ansible ET projet qui est une application de type doodle développée avec quarkus.io pour le back et angular pour le front. 
+Ce dépôt est le rendu des Travaux Pratiques (TP) sur Docker, Ansible, ainsi qu'un projet qui consiste en une application de type Doodle, développée avec [Quarkus.io](https://quarkus.io/) pour le backend et [Angular](https://angular.io/) pour le frontend.
 
-Le Dossier TP docker se composera du resulats du Tp et Les deux Docker file et compose Demandés a rendre 
-le DOsiier Tp Ansible contient que les deux Fichier Host et le fichier yml pour installer K8s
-Le dossier projet contient que les fichiers de configuration pour deployer le projet 
-les autres dossier tel que Ansible et doodlestudent sont les deux dossiers cloné par les repos mentionné sur la page de travail afin de travailler sur eux .
+## Structure du Dépôt
+
+Le dépôt est organisé en trois dossiers principaux correspondant aux différents aspects du travail réalisé :
+
+### TP Docker
+
+Ce dossier contient les résultats du TP Docker, incluant :
+- Les deux fichiers Docker (`Dockerfile`) demandés.
+- Les fichiers de configuration Docker Compose (`docker-compose.yml`).
+
+### TP Ansible
+
+Ce dossier est dédié au TP Ansible et contient :
+- Les fichiers hôtes (`hosts`).
+- Le fichier YAML pour l'installation de Kubernetes (`k8s-install.yml`).
+
+### Projet
+
+Le dossier projet inclut les fichiers de configuration nécessaires au déploiement de l'application de type Doodle :
+- Fichiers de configuration Nginx pour le serveur web du frontend.
+- Fichiers Docker et Docker Compose pour le déploiement du backend et du frontend.
+- Configuration pour la base de données, si applicable.
 
 
+___
 
-merciii
+Pour plus d'informations sur le déploiement ou l'utilisation de ce projet, veuillez consulter les `README.md` spécifiques dans chaque dossier.
+
